@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from ckeditor.fields import RichTextField
 
+
 class User(AbstractUser):
     avatar = models.ImageField(upload_to='users/%Y/%m/', null=True, blank=True)
 
@@ -15,13 +16,12 @@ class BaseModel(models.Model):
         abstract = True,
         ordering = ['-id']
 
+
 class Category(BaseModel):
     name = models.CharField(max_length=50, unique=True)
 
-
     def __str__(self):
-        return  self.name
-
+        return self.name
 
 
 class Courses(BaseModel):
@@ -33,7 +33,6 @@ class Courses(BaseModel):
     class Meta:
         unique_together = ('subject', 'category')
 
-
     def __str__(self):
         return self.subject
 
@@ -43,8 +42,8 @@ class Lesson(BaseModel):
     description = models.TextField()
     image = models.ImageField(upload_to='lesson/%Y/%m/', null=True, blank=True)
     content = RichTextField(null=True)
-    course = models.ForeignKey(
-        Courses, on_delete=models.CASCADE, null=True)
+
+    course = models.ForeignKey(Courses, on_delete=models.CASCADE, null=True)
     tags = models.ManyToManyField('Tag')
 
     class Meta:
@@ -63,6 +62,9 @@ class Comment(BaseModel):
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True, null=False)
+
+    def __str__(self):
+        return self.name
 
 
 

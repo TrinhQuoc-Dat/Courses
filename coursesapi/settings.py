@@ -81,14 +81,21 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'coursedb',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'Admin@123',
         'HOST': '' # mặc định localhost
     }
 }
 
 AUTH_USER_MODEL = 'courses.User'
+
+
 import pymysql
 pymysql.install_as_MySQLdb()
+
+
+SILENCED_SYSTEM_CHECKS = [
+    "ckeditor.W001",  # CKEditor 4.22.1 warning
+]
 
 
 MEDIA_ROOT = '%s/courses/static/' % BASE_DIR
