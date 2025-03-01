@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = 'django-insecure-jhe+)2)2qg2+&x-*(1!$z@53l4fro)o*cx2#&gkv@(l%r+z7gq
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -39,7 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'courses.apps.CoursesConfig',
     'ckeditor',
-    'ckeditor_uploader'
+    'ckeditor_uploader',
+    'rest_framework',
+    'drf_yasg',
+    'debug_toolbar',
+    'cloudinary',
+    'cloudinary_storage',
+    'oauth2_provider',
+
 ]
 
 MIDDLEWARE = [
@@ -50,7 +55,30 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
+
+INTERNAL_IPS = [
+    '127.0.0.1'
+]
+
+REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    )
+}
+
+import cloudinary
+
+cloudinary.config(
+    cloud_name="dmt3j04om",
+    api_key="358476894396759",
+    api_secret="BJB1D2g3nRAdPtErPMYLIELEuyM"
+)
+
+CLOUDINARY_URL = 'cloudinary://358476894396759:BJB1D2g3nRAdPtErPMYLIELEuyM@dmt3j04om'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 ROOT_URLCONF = 'coursesapi.urls'
 
@@ -72,7 +100,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'coursesapi.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -82,21 +109,19 @@ DATABASES = {
         'NAME': 'coursedb',
         'USER': 'root',
         'PASSWORD': 'Admin@123',
-        'HOST': '' # mặc định localhost
+        'HOST': ''  # mặc định localhost
     }
 }
 
 AUTH_USER_MODEL = 'courses.User'
 
-
 import pymysql
-pymysql.install_as_MySQLdb()
 
+pymysql.install_as_MySQLdb()
 
 SILENCED_SYSTEM_CHECKS = [
     "ckeditor.W001",  # CKEditor 4.22.1 warning
 ]
-
 
 MEDIA_ROOT = '%s/courses/static/' % BASE_DIR
 CKEDITOR_UPLOAD_PATH = "images/lessons/"
@@ -118,7 +143,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -130,7 +154,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
@@ -140,3 +163,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CLIENT_ID = "ULECp6fQAOnJYAd048LPqoMC7TRgv5LRYOQXusBY"
+CLIENT_SECRET = "RNFQT7dbxzkO6GQ2vjkluBOiXkogSsM3odmxR1wpxJNybStvj7RI4Kg03n8OQaW2l9UbMWPRbwXTB6lmXeMEpEhNOIcXSmQtUvwOHUqlm5KsUvm0qCM8DaHQiWbt2PGF"
