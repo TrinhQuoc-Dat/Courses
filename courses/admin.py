@@ -92,7 +92,7 @@ class GroupAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 
-admin_site = CourseAppAdminSite(name='Admin site');
+admin_site = CourseAppAdminSite(name='Admin site')
 
 
 admin_site.register(Category)
